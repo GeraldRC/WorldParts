@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css">
+</head>
+<body>
+    <div class="container mb-4 mt-4" >
+        <div class="card">
+            <div class="card-header">
+                <h4 th:text="${titulo}"></h4>
+            </div>
+            <form action="/monitor/filter" method="get">
+            <div class="card-body">
+                <div class="row">
+                        <div class="col-sm-12 col-md-4 mb-2">
+                            <select class="form-control" id="cbowarehouse" name="warehouse">
+                                <option value="0">Seleccione</option>
+                                <option
+                                        th:each="warehouse : ${warehouses}" th:text="${warehouse.getWarehouseName()}"
+                                        th:value="${warehouse.getWarehouseId()}"
+                                ></option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-4 mb-2">
+                            <select class="form-control" id="cbocategory" name="category">
+                                <option value="0">Seleccione</option>
+                                <option
+                                        th:each="category : ${categories}" th:text="${category.getCategoryName()}"
+                                        th:value="${category.getCategoryId()}"
+                                ></option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <button type="submit" class=" btn btn-primary btn-block">Buscar</button>
+                        </div>
+                </div>
+            </div>
+            </form>
+            <hr>
+            <div class="container">
+                <table id="mytable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Almacen</th>
+                            <th>ID Producto</th>
+                            <th>Nombre</th>
+                            <th>Precio Lista</th>
+                            <th>Costo Estandar</th>
+                            <th>Inventario</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="inventory : ${inventories}">
+                            <td th:text="${inventory.getWarehouse().getWarehouseName()}"></td>
+                            <td th:text="${inventory.getProduct().getProductId()}"></td>
+                            <td th:text="${inventory.getProduct().getProductName()}"></td>
+                            <td th:text="${inventory.getProduct().getListPrice()}"></td>
+                            <td th:text="${inventory.getProduct().getStandardCost()}"></td>
+                            <td th:text="${inventory.getQuantity()}"></td>
+                            <td>
+                                <a href="" class="btn btn-primary">Ver</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#mytable').DataTable();
+        });
+    </script>
+</body>
+</html>
