@@ -9,14 +9,20 @@
 </head>
 <body>
     <div class="container mb-4 mt-4" >
+        <div class="container" th:if="${inventories.isEmpty()}">
+            <div class="alert alert-danger">
+                No hay datos para el filtro seleccionado!
+            </div>
+        </div>
         <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-dark text-white">
                 <h4 th:text="${titulo}"></h4>
             </div>
             <form action="/monitor/filter" method="get">
             <div class="card-body">
                 <div class="row">
                         <div class="col-sm-12 col-md-4 mb-2">
+                            <label>Almacen:</label>
                             <select class="form-control" id="cbowarehouse" name="warehouse">
                                 <option value="0">Seleccione</option>
                                 <option
@@ -26,6 +32,7 @@
                             </select>
                         </div>
                         <div class="col-sm-12 col-md-4 mb-2">
+                            <label>Categoria:</label>
                             <select class="form-control" id="cbocategory" name="category">
                                 <option value="0">Seleccione</option>
                                 <option
@@ -35,7 +42,8 @@
                             </select>
                         </div>
                         <div class="col-sm-12 col-md-4">
-                            <button type="submit" class=" btn btn-primary btn-block">Buscar</button>
+                            <label> </label>
+                            <button type="submit" class=" btn btn-dark btn-block">Buscar</button>
                         </div>
                 </div>
             </div>
@@ -63,7 +71,7 @@
                             <td th:text="${inventory.getProduct().getStandardCost()}"></td>
                             <td th:text="${inventory.getQuantity()}"></td>
                             <td>
-                                <a href="" class="btn btn-primary">Ver</a>
+                                <a href="" class="btn btn-outline-dark">Ver</a>
                             </td>
                         </tr>
                     </tbody>
